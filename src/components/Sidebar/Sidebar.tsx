@@ -44,7 +44,7 @@ export const Sidebar = (props: any) => {
               El Comercio
               <Link to="/el-comercio" />
             </MenuItem>
-            <MenuItem
+            {/* <MenuItem
               icon={<FindInPageIcon className="sidebar-icon" />}
               active={pathname === '/el-universo'}
             >
@@ -57,24 +57,6 @@ export const Sidebar = (props: any) => {
             >
               El Telégrafo
               <Link to="/el-telegrafo" />
-            </MenuItem>
-            {/* <MenuItem icon={<BellIcon className="sidebar-icon" />}>
-              La Hora
-            </MenuItem>
-            <MenuItem icon={<BellIcon className="sidebar-icon" />}>
-              El Mercurio
-            </MenuItem>
-            <MenuItem icon={<BellIcon className="sidebar-icon" />}>
-              Primicias
-            </MenuItem>
-            <MenuItem icon={<BellIcon className="sidebar-icon" />}>
-              ABC
-            </MenuItem>
-            <MenuItem icon={<BellIcon className="sidebar-icon" />}>
-              La Hora
-            </MenuItem>
-            <MenuItem icon={<BellIcon className="sidebar-icon" />}>
-              La Hora
             </MenuItem> */}
             {/* <SubMenu title="Components" icon={<BellIcon />}>
               <MenuItem>Component 1</MenuItem>

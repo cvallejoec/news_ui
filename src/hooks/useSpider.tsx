@@ -2,11 +2,12 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 
 import { config } from '../config';
+import { News } from '../types/new.type';
 
 export const useSpider = (spiderName: string) => {
   const { backend } = config;
   const [state, setState] = useState({
-    data: [],
+    data: [] as News,
     loading: true,
     error: false,
   });
@@ -17,7 +18,7 @@ export const useSpider = (spiderName: string) => {
       .get(url)
       .then(({ data }) => {
         setState({
-          data: data.items,
+          data: data.items as News,
           loading: false,
           error: false,
         });
