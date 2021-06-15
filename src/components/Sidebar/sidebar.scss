@@ -1,21 +1,24 @@
 #header {
-  position: absolute;
-  width: 220px;
+  // position: absolute;
+  // width: 220px;
 }
 #header .pro-sidebar {
   height: 100vh;
 }
 #header .closemenu {
-  color: #000; // Color de ícono de Cerrar
+  color: var(--bg); // Color de ícono de Cerrar
   position: absolute;
   right: 0;
   z-index: 9999;
   line-height: 20px;
   border-radius: 50%;
   font-weight: bold;
-  font-size: 22px;
-  top: 55px;
+  // font-size: 40px;
+  top: 45px;
   cursor: pointer;
+}
+#header .closemenu svg {
+  font-size: 40px;
 }
 #header .pro-sidebar {
   width: 100%;
@@ -42,9 +45,12 @@
   padding: 0 5px;
 }
 #header .pro-sidebar-inner .pro-sidebar-layout ul .pro-inner-item {
-  color: var(--text-color); // Color de la fuente
+  color: var(--text-color-dark); // Color de la fuente
   margin: 10px 0px;
   font-weight: bold;
+}
+#header .pro-sidebar-inner .pro-sidebar-layout ul .active .pro-inner-item {
+  color: var(--text-color); // Color de la fuente activo
 }
 #header
   .pro-sidebar-inner
@@ -53,7 +59,7 @@
   .pro-inner-item
   .pro-icon-wrapper {
   // background-color: #f5edbe; // Fondo del ícono
-  background-color: var(--bg-accent); // Fondo del ícono
+  background-color: var(--accent); // Fondo del ícono
   color: #000;
   border-radius: 3px;
   padding: 3px;

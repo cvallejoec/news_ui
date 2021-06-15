@@ -13,13 +13,22 @@ code {
 }
 
 :root {
-  --bg: #242526;
-  --bg-accent: #484a4d;
-  --text-color: #dadce1;
+  --bg: #424b54;
+  --bg-accent: #6d7175;
+  --text-color: #fffffc;
+  --text-color-dark: #000;
+  --accent: #0496ff;
   --nav-size: 60px;
   --border: 1px solid #474a4d;
   --border-radius: 8px;
   --speed: 500ms;
+  --font-light: 300;
+  --font-regular: 400;
+  --font-bold: 700;
+}
+
+#root {
+  display: flex;
 }
 
 ul {
@@ -29,7 +38,7 @@ ul {
 }
 
 a {
-  color: var(--text-color);
+  color: var(--text-color-dark);
   text-decoration: none;
 }
 
