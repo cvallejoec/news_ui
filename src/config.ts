@@ -6,4 +6,8 @@ export const config = {
   spiders: {
     el_comercio: 'el_comercio',
   },
+  ppt: {
+    fullWidth: 10.0,
+    fullHeight: 5.625,
+  },
 };
