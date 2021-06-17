@@ -10,11 +10,12 @@ import {
 } from 'react-pro-sidebar';
 import { Link, useLocation } from 'react-router-dom';
 import 'react-pro-sidebar/dist/css/styles.css';
-
-import './sidebar.scss';
 import FindInPageIcon from '@material-ui/icons/FindInPage';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
+
+import './sidebar.scss';
+import { Downloader } from '../Downloader/Downloader';
 
 export const Sidebar = (props: any) => {
   const [menuCollapse, setMenuCollapse] = useState(false);
@@ -65,11 +66,7 @@ export const Sidebar = (props: any) => {
           </Menu>
         </SidebarContent>
         <SidebarFooter>
-          {/* <Menu>
-            <MenuItem icon={<BellIcon className="sidebar-icon" />}>
-              Logout
-            </MenuItem>
-          </Menu> */}
+          <Downloader />
         </SidebarFooter>
       </ProSidebar>
     </div>
