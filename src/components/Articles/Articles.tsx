@@ -42,7 +42,7 @@ export const Articles: FC<ArticleProps> = (props) => {
         <Article
           key={url}
           title={title}
-          link={url}
+          url={url}
           paragraphs={body}
           expanded={expanded}
           handleChange={handleChange}

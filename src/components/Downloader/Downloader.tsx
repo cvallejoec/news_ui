@@ -75,8 +75,7 @@ export const Downloader = () => {
   });
   slide3.addText(
     `${newOfTheDay.body.map((p, i) => {
-      console.log(p);
-      if (i >= 5) return;
+      if (i >= 5) return null;
       return `
       ${p}
       `;
