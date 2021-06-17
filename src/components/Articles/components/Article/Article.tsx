@@ -7,7 +7,10 @@ import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import OpenInNewIcon from '@material-ui/icons/OpenInNew';
 
+import { useSelectedNews } from '../../../../hooks/useSelectedNews';
+import { ActionType } from '../../../../common/NewsProvider';
 import { Button } from '../../../Button/Button';
+import { CheckboxC } from '../../../Checkbox/Checkbox';
 
 interface ArticleProps {
   title: string;
@@ -57,6 +60,7 @@ export const Article: FC<ArticleProps> = ({
   handleChange,
 }: ArticleProps) => {
   const classes = useStyles();
+  const { selectedNews, dispatch } = useSelectedNews();
 
   return (
     <Accordion
@@ -79,6 +83,20 @@ export const Article: FC<ArticleProps> = ({
       </AccordionSummary>
       <AccordionDetails>
         <div>
+          <CheckboxC
+            label={'Noticia del día'}
+            checked={selectedNews.newOfTheDay.url === link}
+            handleChange={() => {
+              // If the selected NewOfTheDay is the same clicked, then I remove it
+              if (selectedNews.newOfTheDay.url === link)
+                return dispatch({ type: ActionType.removeNewOfTheDay });
+              // But if don't it means that I have to change it.
+              dispatch({
+                type: ActionType.selectNewOfTheDay,
+                payload: { title, url: link, body: paragraphs },
+              });
+            }}
+          />
           {paragraphs.map((paragraph) => (
             <>
               <Typography className={classes.paragraph}>{paragraph}</Typography>
