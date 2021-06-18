@@ -34,10 +34,15 @@ export const CopyToClipboardC: FC<CopyToClipboardType> = ({
         onCopy={() => setState({ ...state, copied: true })}
       >
         <button className="button button--secondary button--margin-y">
-          {label} <FileCopyIcon />
+          {state.copied ? (
+            <span>Copiado!</span>
+          ) : (
+            <>
+              {label} <FileCopyIcon />{' '}
+            </>
+          )}
         </button>
       </CopyToClipboard>
-      {state.copied && <span>Copiado!</span>}
     </div>
   );
 };
