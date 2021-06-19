@@ -58,16 +58,17 @@ export const getNewOfTheDay = (selectedNews: SelectedNewsType) => {
     text: parseParagraphs(newOfTheDay.body),
     position: {
       x: 4.07,
-      y: 2.28,
+      y: 2.04,
     },
     size: {
       w: 5.35,
-      h: 2.25,
+      h: 2.51,
     },
-    fontSize: 6,
+    fontSize: 7,
     color: '#000000',
     align: TEXT_HALIGN.justify,
-    lineSpacing: 11,
+    lineSpacing: 0,
+    charSpacing: 0,
   };
 
   const url: SlideText = {
