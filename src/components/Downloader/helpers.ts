@@ -1,0 +1,98 @@
+import { SlideText, TEXT_HALIGN } from './reducer';
+import { SelectedNewsType } from '../../common/NewsProvider';
+import { getCurrentMonth } from '../../helpers/getMonthName';
+
+export const getCover = () => {
+  const monthAndDate: SlideText = {
+    text: `${getCurrentMonth()} ${new Date().getDate()}`,
+    position: {
+      x: 3.38,
+      y: 3.07,
+    },
+    size: {
+      w: 1.275,
+      h: 0.397,
+    },
+    fontSize: 18,
+    color: '#cbcbcb',
+    align: TEXT_HALIGN.right,
+  };
+  const year: SlideText = {
+    text: `${new Date().getFullYear()}`,
+    position: {
+      x: 3.7,
+      y: 3.307,
+    },
+    size: {
+      w: 0.96,
+      h: 0.5,
+    },
+    fontSize: 20,
+    color: '#cbcbcb',
+    align: TEXT_HALIGN.right,
+  };
+  return [monthAndDate, year];
+};
+
+export const getNewOfTheDay = (selectedNews: SelectedNewsType) => {
+  const { newOfTheDay } = selectedNews;
+
+  const title: SlideText = {
+    text: `${newOfTheDay.title}`,
+    position: {
+      x: 0.19,
+      y: 0.87,
+    },
+    size: {
+      w: 8.74,
+      h: 1.16,
+    },
+    fontSize: 20,
+    color: '#0692f0',
+    align: TEXT_HALIGN.right,
+    bold: true,
+    charSpacing: 0,
+  };
+
+  const body: SlideText = {
+    text: parseParagraphs(newOfTheDay.body),
+    position: {
+      x: 4.07,
+      y: 2.28,
+    },
+    size: {
+      w: 5.35,
+      h: 2.25,
+    },
+    fontSize: 6,
+    color: '#000000',
+    align: TEXT_HALIGN.justify,
+    lineSpacing: 11,
+  };
+
+  const url: SlideText = {
+    text: `${newOfTheDay.url}`,
+    position: {
+      x: 4.17,
+      y: 4.8,
+    },
+    size: {
+      w: 7.15,
+      h: 0.18,
+    },
+    fontSize: 7,
+    color: '#5c5c5c',
+    align: TEXT_HALIGN.left,
+  };
+
+  return [title, body, url];
+};
+
+const parseParagraphs = (body: string[]) => {
+  let completeParagraph = '';
+  body.map((p) => {
+    if (completeParagraph.length > 1600) return '';
+    return (completeParagraph = completeParagraph + p + '\n\n');
+  });
+  return completeParagraph;
+};

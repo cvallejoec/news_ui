@@ -59,6 +59,9 @@ export type SlideText = {
   fontSize?: number;
   color?: string;
   align?: TEXT_HALIGN;
+  bold?: boolean;
+  lineSpacing?: number;
+  charSpacing?: number;
 };
 
 export type SlideTexts = SlideText[];
@@ -138,7 +141,8 @@ export const usePpt = () => {
       slideTexts.map((slideText) => {
         const { x, y } = slideText.position;
         const { w, h } = slideText.size;
-        const { fontSize, color, align } = slideText;
+        const { fontSize, color, align, bold, lineSpacing, charSpacing } =
+          slideText;
         return slide.addText(slideText.text, {
           x,
           y,
@@ -147,6 +151,9 @@ export const usePpt = () => {
           fontSize,
           color,
           align,
+          bold,
+          lineSpacing,
+          charSpacing,
         });
       });
     }
