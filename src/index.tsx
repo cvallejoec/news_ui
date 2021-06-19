@@ -4,10 +4,13 @@ import './index.css';
 import App from './App';
 
 import { NewsProvider } from './common/NewsProvider';
+import { SidebarProvider } from './common/SidebarProvider';
 
 ReactDOM.render(
   <NewsProvider>
-    <App />
+    <SidebarProvider>
+      <App />
+    </SidebarProvider>
   </NewsProvider>,
   document.getElementById('root')
 );

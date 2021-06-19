@@ -1,6 +1,8 @@
 import React from 'react';
-import { Menu, MenuItem } from 'react-pro-sidebar';
-import GetAppIcon from '@material-ui/icons/GetApp';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+import InboxIcon from '@material-ui/icons/MoveToInbox';
 
 import { config } from '../../config';
 import { useSelectedNews } from '../../hooks/useSelectedNews';
@@ -27,13 +29,11 @@ export const Downloader = () => {
   };
 
   return (
-    <Menu>
-      <MenuItem
-        icon={<GetAppIcon className="sidebar-icon" />}
-        onClick={handleDownload}
-      >
-        Descargar
-      </MenuItem>
-    </Menu>
+    <ListItem button onClick={handleDownload}>
+      <ListItemIcon>
+        <InboxIcon />
+      </ListItemIcon>
+      <ListItemText primary={'Descargar'} />
+    </ListItem>
   );
 };

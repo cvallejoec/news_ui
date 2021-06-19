@@ -10,7 +10,7 @@ export const ElComercio = () => {
 
   return (
     <div>
-      <h1>El Comercio</h1>
+      {/* <h1>El Comercio</h1> */}
       {loading && <p>Cargando...</p>}
       {data.length > 0 && <Articles news={data} />}
     </div>

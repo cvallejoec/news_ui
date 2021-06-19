@@ -18,4 +18,9 @@ export const config = {
         'https://1.bp.blogspot.com/-DUEsSGynrDU/YMlF43wyB7I/AAAAAAAAvd0/V4Z1pNG-XKU6Vo3USIZR34KYIi3FJZBhQCLcBGAsYHQ/s16000/diapo-3.jpg',
     },
   },
+  styles: {
+    drawer: {
+      width: 200,
+    },
+  },
 };
