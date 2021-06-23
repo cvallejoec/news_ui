@@ -3,6 +3,7 @@ import React from 'react';
 import { config } from '../../config';
 import { useSpider } from '../../hooks/useSpider';
 import { Articles } from '../../components/Articles/Articles';
+import { Loading } from '../../components/Loading/Loading';
 
 export const ElComercio = () => {
   const { spiders } = config;
@@ -11,7 +12,7 @@ export const ElComercio = () => {
   return (
     <div>
       {/* <h1>El Comercio</h1> */}
-      {loading && <p>Cargando...</p>}
+      {loading && <Loading />}
       {data.length > 0 && <Articles news={data} />}
     </div>
   );

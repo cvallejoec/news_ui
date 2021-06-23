@@ -14,8 +14,10 @@ import { CheckboxC } from '../../../Checkbox/Checkbox';
 import { CopyToClipboardC } from '../../../CopyToClipboard/CopyToClipboard';
 
 interface ArticleProps {
+  index: number;
   title: string;
   url: string;
+  time: string;
   paragraphs: string[];
   expanded: string | false;
   handleChange: (
@@ -38,6 +40,10 @@ const useStyles = makeStyles((theme: Theme) =>
       fontWeight: 700,
       // flexShrink: 0,
     },
+    time: {
+      fontSize: theme.typography.pxToRem(13),
+      color: 'var(--bg-accent)',
+    },
     viewMore: {
       marginLeft: 'auto',
     },
@@ -57,10 +63,12 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 export const Article: FC<ArticleProps> = ({
+  index,
   title,
   url,
   paragraphs,
   expanded,
+  time,
   handleChange,
 }: ArticleProps) => {
   const classes = useStyles();
@@ -78,7 +86,13 @@ export const Article: FC<ArticleProps> = ({
         id="panel1bh-header"
         className={classes.accordionSummary}
       >
-        <Typography className={classes.heading}>{title}</Typography>
+        <div>
+          <Typography className={classes.heading}>
+            {index}. {title}
+          </Typography>
+          <br />
+          <small className={classes.time}>{time}</small>
+        </div>
         <div className={classes.viewMore}>
           <Button url={url} icon={<OpenInNewIcon />}>
             Ver Más
@@ -101,7 +115,7 @@ export const Article: FC<ArticleProps> = ({
               // But if don't it means that I have to change it.
               dispatch({
                 type: ActionType.selectNewOfTheDay,
-                payload: { title, url: url, body: paragraphs },
+                payload: { title, url, body: paragraphs, time },
               });
             }}
           />

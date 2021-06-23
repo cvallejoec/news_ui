@@ -26,6 +26,7 @@ const defaultState: SelectedNewsType = {
   newOfTheDay: {
     title: '',
     url: '',
+    time: '',
     body: [],
   },
 };

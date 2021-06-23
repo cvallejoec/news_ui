@@ -4,7 +4,13 @@ import axios from 'axios';
 import { config } from '../config';
 import { News } from '../types/new.type';
 
-export const useSpider = (spiderName: string) => {
+export type UseSpider = (spiderName: string) => {
+  data: News;
+  loading: boolean;
+  error: boolean;
+};
+
+export const useSpider: UseSpider = (spiderName: string) => {
   const { backend } = config;
   const [state, setState] = useState({
     data: [] as News,
@@ -17,8 +23,12 @@ export const useSpider = (spiderName: string) => {
     axios
       .get(url)
       .then(({ data }) => {
+        const retrievedNews = data.items as News;
+        retrievedNews.sort((a, b) =>
+          a.time < b.time ? 1 : b.time < a.time ? -1 : 0
+        );
         setState({
-          data: data.items as News,
+          data: retrievedNews,
           loading: false,
           error: false,
         });
