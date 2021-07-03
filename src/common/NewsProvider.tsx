@@ -1,10 +1,12 @@
 import { createContext, useReducer, FC } from 'react';
 
-import { New } from '../types/new.type';
+import { New, CategorizedNew, CategoriesTypes } from '../types/new.type';
 
 export enum ActionType {
   selectNewOfTheDay = 'SELECT-NEW-OF-THE-DAY',
   removeNewOfTheDay = 'REMOVE-PRINCIPAL-NEW',
+  addCategorizedNew = 'ADD-CATEGORIZED-NEW',
+  removeCategorizedNew = 'REMOVE-CATEGORIZED-NEW',
 }
 
 export type ActionTypes =
@@ -14,10 +16,19 @@ export type ActionTypes =
     }
   | {
       type: ActionType.removeNewOfTheDay;
+    }
+  | {
+      type: ActionType.addCategorizedNew;
+      category: CategoriesTypes;
+      article: New;
+    }
+  | {
+      type: ActionType.removeCategorizedNew;
     };
 
 export type SelectedNewsType = {
   newOfTheDay: New;
+  categorizedNews: CategorizedNew[];
 };
 
 export type DispatchNew = (action: ActionTypes) => void;
@@ -30,6 +41,7 @@ const defaultState: SelectedNewsType = {
     category: '',
     body: [],
   },
+  categorizedNews: [],
 };
 
 export const NewsContext = createContext<{
@@ -46,12 +58,31 @@ const newsReducer = (state: SelectedNewsType, action: ActionTypes) => {
       return { ...state, newOfTheDay: action.payload };
     case ActionType.removeNewOfTheDay:
       return { ...state, newOfTheDay: defaultState.newOfTheDay };
+    case ActionType.addCategorizedNew:
+      return {
+        ...state,
+        // categorizedNews: state.categorizedNews.push({
+        //   category: action.category,
+        //   article: action.article,
+        // }),
+        categorizedNews: [
+          ...state.categorizedNews,
+          {
+            category: action.category,
+            article: action.article,
+          },
+        ],
+      };
+    case ActionType.removeCategorizedNew:
+      return state;
+    default:
+      return state;
   }
 };
 
 export const NewsProvider: FC = ({ children }) => {
   const [selectedNews, dispatch] = useReducer(newsReducer, defaultState);
-
+  console.log(selectedNews);
   return (
     <NewsContext.Provider value={{ selectedNews, dispatch }}>
       {children}

@@ -8,9 +8,11 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import OpenInNewIcon from '@material-ui/icons/OpenInNew';
 
 import { useSelectedNews } from '../../../../hooks/useSelectedNews';
+import { categories, CategoriesTypes } from '../../../../types/new.type';
 import { ActionType } from '../../../../common/NewsProvider';
 import { Button } from '../../../Button/Button';
 import { CheckboxC } from '../../../Checkbox/Checkbox';
+import { ComboBox } from '../../../Autocomplete/Autocomplete';
 import { CopyToClipboardC } from '../../../CopyToClipboard/CopyToClipboard';
 
 interface ArticleProps {
@@ -76,6 +78,31 @@ export const Article: FC<ArticleProps> = ({
   const classes = useStyles();
   const { selectedNews, dispatch } = useSelectedNews();
 
+  const handleNewOfTheDay = () => {
+    // If the selected NewOfTheDay is the same clicked, then I remove it
+    if (selectedNews.newOfTheDay.url === url)
+      return dispatch({ type: ActionType.removeNewOfTheDay });
+    // But if don't it means that I have to change it.
+    dispatch({
+      type: ActionType.selectNewOfTheDay,
+      payload: { title, url, body: paragraphs, time, category },
+    });
+  };
+
+  const handleCategory = (value: CategoriesTypes) => {
+    dispatch({
+      type: ActionType.addCategorizedNew,
+      category: value,
+      article: {
+        body: paragraphs,
+        category,
+        time,
+        title,
+        url,
+      },
+    });
+  };
+
   return (
     <Accordion
       expanded={expanded === url}
@@ -107,20 +134,18 @@ export const Article: FC<ArticleProps> = ({
             <CopyToClipboardC value={title} label={'Copiar Título'} />
             <CopyToClipboardC value={url} label={'Copiar URL'} />
           </div>
-          <CheckboxC
-            label={'Noticia del día'}
-            checked={selectedNews.newOfTheDay.url === url}
-            handleChange={() => {
-              // If the selected NewOfTheDay is the same clicked, then I remove it
-              if (selectedNews.newOfTheDay.url === url)
-                return dispatch({ type: ActionType.removeNewOfTheDay });
-              // But if don't it means that I have to change it.
-              dispatch({
-                type: ActionType.selectNewOfTheDay,
-                payload: { title, url, body: paragraphs, time, category },
-              });
-            }}
-          />
+          <div>
+            <CheckboxC
+              label={'Noticia del día'}
+              checked={selectedNews.newOfTheDay.url === url}
+              handleChange={handleNewOfTheDay}
+            />
+            <ComboBox
+              label="Asignar Categoría"
+              options={categories}
+              handleChange={handleCategory}
+            />
+          </div>
           {paragraphs.map((paragraph) => (
             <>
               <Typography className={classes.paragraph}>{paragraph}</Typography>
