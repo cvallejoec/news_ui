@@ -30,8 +30,8 @@ function TabPanel(props: TabPanelProps) {
     <div
       role="tabpanel"
       hidden={value !== index}
-      id={`full-width-tabpanel-${index}`}
-      aria-labelledby={`full-width-tab-${index}`}
+      id={`scrollable-auto-tabpanel-${index}`}
+      aria-labelledby={`scrollable-auto-tab-${index}`}
       {...other}
     >
       {value === index && (
@@ -45,15 +45,23 @@ function TabPanel(props: TabPanelProps) {
 
 export function a11yProps(index: number) {
   return {
-    id: `full-width-tab-${index}`,
-    'aria-controls': `full-width-tabpanel-${index}`,
+    id: `scrollable-auto-tab-${index}`,
+    'aria-controls': `scrollable-auto-tabpanel-${index}`,
   };
 }
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
-    backgroundColor: theme.palette.background.paper,
     flexGrow: 1,
+    width: '85vw',
+    minHeight: '100vh',
+    margin: '0 auto',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
+  tabsContainer: {
+    width: '100%',
   },
 }));
 
@@ -72,30 +80,35 @@ export const TabsC: FC<TabsProps> = ({ tabs }) => {
 
   return (
     <div className={classes.root}>
-      <AppBar position="static" color="default">
-        <Tabs
-          value={value}
-          onChange={handleChange}
-          indicatorColor="primary"
-          textColor="primary"
-          centered
+      <div className={classes.tabsContainer}>
+        <AppBar position="static" color="default">
+          <Tabs
+            value={value}
+            onChange={handleChange}
+            indicatorColor="primary"
+            textColor="primary"
+            variant="scrollable"
+            scrollButtons="auto"
+            aria-label="scrollable auto tabs example"
+            centered
+          >
+            {tabs.map((tab, index) => (
+              <Tab label={tab.label} {...a11yProps(index)} />
+            ))}
+          </Tabs>
+        </AppBar>
+        <SwipeableViews
+          axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
+          index={value}
+          onChangeIndex={handleChangeIndex}
         >
           {tabs.map((tab, index) => (
-            <Tab label={tab.label} {...a11yProps(index)} />
+            <TabPanel value={value} index={index} dir={theme.direction}>
+              {tab.children}
+            </TabPanel>
           ))}
-        </Tabs>
-      </AppBar>
-      <SwipeableViews
-        axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
-        index={value}
-        onChangeIndex={handleChangeIndex}
-      >
-        {tabs.map((tab, index) => (
-          <TabPanel value={value} index={index} dir={theme.direction}>
-            {tab.children}
-          </TabPanel>
-        ))}
-      </SwipeableViews>
+        </SwipeableViews>
+      </div>
     </div>
   );
 };

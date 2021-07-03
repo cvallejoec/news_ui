@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 
 import { config } from '../config';
-import { News } from '../types/new.type';
+import { News, New } from '../types/new.type';
 
 export type UseSpider = (spiderName: string) => {
   data: News;
@@ -43,4 +43,26 @@ export const useSpider: UseSpider = (spiderName: string) => {
   }, [url]);
 
   return state;
+};
+
+export const getCategories = (data: New[]): string[] => {
+  let categories: string[] = [];
+  data.map((item) => {
+    if (item.category && !categories.includes(item.category)) {
+      return categories.push(item.category);
+    } else {
+      return '';
+    }
+  });
+  categories.sort(function (a, b) {
+    if (a < b) {
+      return -1;
+    }
+    if (a > b) {
+      return 1;
+    }
+    return 0;
+  });
+
+  return categories;
 };

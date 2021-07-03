@@ -18,6 +18,7 @@ interface ArticleProps {
   title: string;
   url: string;
   time: string;
+  category: string;
   paragraphs: string[];
   expanded: string | false;
   handleChange: (
@@ -69,6 +70,7 @@ export const Article: FC<ArticleProps> = ({
   paragraphs,
   expanded,
   time,
+  category,
   handleChange,
 }: ArticleProps) => {
   const classes = useStyles();
@@ -115,7 +117,7 @@ export const Article: FC<ArticleProps> = ({
               // But if don't it means that I have to change it.
               dispatch({
                 type: ActionType.selectNewOfTheDay,
-                payload: { title, url, body: paragraphs, time },
+                payload: { title, url, body: paragraphs, time, category },
               });
             }}
           />

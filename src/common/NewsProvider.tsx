@@ -27,6 +27,7 @@ const defaultState: SelectedNewsType = {
     title: '',
     url: '',
     time: '',
+    category: '',
     body: [],
   },
 };

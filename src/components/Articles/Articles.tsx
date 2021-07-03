@@ -38,13 +38,14 @@ export const Articles: FC<ArticleProps> = (props) => {
 
   return (
     <div className={classes.root}>
-      {news.map(({ title, url, body, time }: New, index) => (
+      {news.map(({ title, url, body, time, category }: New, index) => (
         <Article
           key={url}
           index={index + 1}
           title={title}
           url={url}
           time={time}
+          category={category}
           paragraphs={body}
           expanded={expanded}
           handleChange={handleChange}
