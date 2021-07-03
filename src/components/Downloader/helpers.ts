@@ -1,6 +1,7 @@
 import { SlideText, TEXT_HALIGN } from './reducer';
 import { SelectedNewsType } from '../../common/NewsProvider';
 import { getCurrentMonth } from '../../helpers/getMonthName';
+import { CategoriesTypes } from '../../types/new.type';
 
 export const getCover = () => {
   const monthAndDate: SlideText = {
@@ -87,6 +88,80 @@ export const getNewOfTheDay = (selectedNews: SelectedNewsType) => {
   };
 
   return [title, body, url];
+};
+
+export const getCategorizedNews = (
+  selectedNews: SelectedNewsType,
+  category: CategoriesTypes
+) => {
+  type Article = {
+    title: SlideText;
+    body: SlideText;
+    url: SlideText;
+  };
+
+  const { categorizedNews } = selectedNews;
+
+  const filteredNews = categorizedNews.filter(
+    (item) => item.category === category
+  );
+
+  const articles: SlideText[] = [];
+
+  filteredNews.map(({ article }) => {
+    const title: SlideText = {
+      text: article.title,
+      position: {
+        x: 0.19,
+        y: 0.87,
+      },
+      size: {
+        w: 8.74,
+        h: 1.16,
+      },
+      fontSize: 20,
+      color: '#0692f0',
+      align: TEXT_HALIGN.right,
+      bold: true,
+      charSpacing: 0,
+    };
+
+    const body: SlideText = {
+      text: parseParagraphs(article.body),
+      position: {
+        x: 4.07,
+        y: 2.04,
+      },
+      size: {
+        w: 5.35,
+        h: 2.51,
+      },
+      fontSize: 7,
+      color: '#000000',
+      align: TEXT_HALIGN.justify,
+      lineSpacing: 0,
+      charSpacing: 0,
+    };
+
+    const url: SlideText = {
+      text: `${article.url}`,
+      position: {
+        x: 4.17,
+        y: 4.8,
+      },
+      size: {
+        w: 7.15,
+        h: 0.18,
+      },
+      fontSize: 7,
+      color: '#5c5c5c',
+      align: TEXT_HALIGN.left,
+    };
+
+    return articles.push(title, body, url);
+  });
+
+  return articles;
 };
 
 const parseParagraphs = (body: string[]) => {

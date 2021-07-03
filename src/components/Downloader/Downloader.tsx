@@ -8,7 +8,8 @@ import { config } from '../../config';
 import { useSelectedNews } from '../../hooks/useSelectedNews';
 import { getFormattedDate } from '../../helpers/getFormattedDate';
 import { usePpt } from './reducer';
-import { getCover, getNewOfTheDay } from './helpers';
+import { getCover, getNewOfTheDay, getCategorizedNews } from './helpers';
+import { CategoriesTypes } from '../../types/new.type';
 
 export const Downloader = () => {
   const { addSlide, downloadPpt } = usePpt();
@@ -20,9 +21,15 @@ export const Downloader = () => {
     addSlide(ppt.urls.portada, [monthAndDate, year]);
 
     addSlide(ppt.urls.noticia_del_dia_cover);
-
     const [title, body, url] = getNewOfTheDay(selectedNews);
     addSlide(ppt.urls.noticia_del_dia, [title, body, url]);
+
+    const economiaNews = getCategorizedNews(
+      selectedNews,
+      CategoriesTypes.ECONOMIA
+    );
+    addSlide(ppt.urls.portada_economia);
+    addSlide(ppt.urls.economia_contenido, economiaNews);
 
     const fileName = `RESUMEN EJECUTIVO DE NOTICIAS - ${getFormattedDate()}`;
     downloadPpt(fileName);
