@@ -24,6 +24,7 @@ export type ActionTypes =
     }
   | {
       type: ActionType.removeCategorizedNew;
+      url: string;
     };
 
 export type SelectedNewsType = {
@@ -61,10 +62,6 @@ const newsReducer = (state: SelectedNewsType, action: ActionTypes) => {
     case ActionType.addCategorizedNew:
       return {
         ...state,
-        // categorizedNews: state.categorizedNews.push({
-        //   category: action.category,
-        //   article: action.article,
-        // }),
         categorizedNews: [
           ...state.categorizedNews,
           {
@@ -74,7 +71,12 @@ const newsReducer = (state: SelectedNewsType, action: ActionTypes) => {
         ],
       };
     case ActionType.removeCategorizedNew:
-      return state;
+      return {
+        ...state,
+        categorizedNews: state.categorizedNews.filter(
+          (item) => item.article.url !== action.url
+        ),
+      };
     default:
       return state;
   }

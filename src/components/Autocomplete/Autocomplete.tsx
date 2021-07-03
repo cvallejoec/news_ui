@@ -6,6 +6,7 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 interface ComboBoxProps {
   label: string;
   options: any[];
+  currentValue: string | null;
   handleChange: (value: any) => void;
 }
 
@@ -13,6 +14,7 @@ export const ComboBox: FC<ComboBoxProps> = ({
   label,
   options,
   handleChange,
+  currentValue,
 }) => {
   return (
     <Autocomplete
@@ -28,6 +30,7 @@ export const ComboBox: FC<ComboBoxProps> = ({
         // setFieldValue('awardId', value?.id || '');
         handleChange(value);
       }}
+      value={currentValue}
     />
   );
 };

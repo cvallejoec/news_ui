@@ -90,17 +90,26 @@ export const Article: FC<ArticleProps> = ({
   };
 
   const handleCategory = (value: CategoriesTypes) => {
-    dispatch({
-      type: ActionType.addCategorizedNew,
-      category: value,
-      article: {
-        body: paragraphs,
-        category,
-        time,
-        title,
+    if (value === null) {
+      console.log('Removiendo...');
+      dispatch({
+        type: ActionType.removeCategorizedNew,
         url,
-      },
-    });
+      });
+    } else {
+      console.log('Añadiendo...');
+      dispatch({
+        type: ActionType.addCategorizedNew,
+        category: value,
+        article: {
+          body: paragraphs,
+          category,
+          time,
+          title,
+          url,
+        },
+      });
+    }
   };
 
   return (
@@ -144,6 +153,15 @@ export const Article: FC<ArticleProps> = ({
               label="Asignar Categoría"
               options={categories}
               handleChange={handleCategory}
+              currentValue={
+                selectedNews.categorizedNews.filter(
+                  (item) => item.article.url === url
+                ).length > 0
+                  ? selectedNews.categorizedNews.filter(
+                      (item) => item.article.url === url
+                    )[0].category
+                  : null
+              }
             />
           </div>
           {paragraphs.map((paragraph) => (
