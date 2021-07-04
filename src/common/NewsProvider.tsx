@@ -84,6 +84,7 @@ const newsReducer = (state: SelectedNewsType, action: ActionTypes) => {
 
 export const NewsProvider: FC = ({ children }) => {
   const [selectedNews, dispatch] = useReducer(newsReducer, defaultState);
+  console.log(selectedNews);
   return (
     <NewsContext.Provider value={{ selectedNews, dispatch }}>
       {children}

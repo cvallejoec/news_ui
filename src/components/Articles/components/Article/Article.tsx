@@ -90,14 +90,11 @@ export const Article: FC<ArticleProps> = ({
   };
 
   const handleCategory = (value: CategoriesTypes) => {
-    if (value === null) {
-      console.log('Removiendo...');
-      dispatch({
-        type: ActionType.removeCategorizedNew,
-        url,
-      });
-    } else {
-      console.log('Añadiendo...');
+    dispatch({
+      type: ActionType.removeCategorizedNew,
+      url,
+    });
+    if (value !== null) {
       dispatch({
         type: ActionType.addCategorizedNew,
         category: value,
