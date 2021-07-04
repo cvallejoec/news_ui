@@ -14,7 +14,7 @@ import {
   getCategorizedNews,
   drawCategorizedNew,
 } from './helpers';
-import { CategoriesTypes } from '../../types/new.type';
+import { CategoriesTypes, categories } from '../../types/new.type';
 import { SlideText } from './reducer';
 
 export const Downloader = () => {
@@ -30,30 +30,34 @@ export const Downloader = () => {
     const [title, body, url] = getNewOfTheDay(selectedNews);
     addSlide(ppt.urls.noticia_del_dia, [title, body, url]);
 
-    const economiaNews = getCategorizedNews(
-      selectedNews,
-      CategoriesTypes.ECONOMIA
-    );
-    addSlide(ppt.urls.portada_economia);
-    let pairOfNews: SlideText[] = [];
-    economiaNews.map((item, index) => {
-      const { article } = item;
+    categories.map((category) => {
+      const categoryNews = getCategorizedNews(selectedNews, category);
+      if (categoryNews.length === 0) return '';
+      addSlide(getCategoryCover(category));
 
-      const [title, body, url] = drawCategorizedNew(article, index);
-      pairOfNews.push(title);
-      pairOfNews.push(body);
-      pairOfNews.push(url);
+      let pairOfNews: SlideText[] = [];
+      categoryNews.map((item, index) => {
+        const { article } = item;
 
-      if ((index + 1) % 2 === 1 && index + 1 === economiaNews.length) {
-        // Is the last New and is on the LEFT
-        addSlide(ppt.urls.economia_contenido, pairOfNews);
-      }
+        const [title, body, url] = drawCategorizedNew(article, index);
+        pairOfNews.push(title);
+        pairOfNews.push(body);
+        pairOfNews.push(url);
 
-      if ((index + 1) % 2 === 0) {
-        // Is the RIGHT New
-        addSlide(ppt.urls.economia_contenido, pairOfNews);
-        pairOfNews = [];
-      }
+        if ((index + 1) % 2 === 1 && index + 1 === categoryNews.length) {
+          // Is the last New and is on the LEFT
+          addSlide(getCategoryBackground(category), pairOfNews);
+        }
+
+        if ((index + 1) % 2 === 0) {
+          // Is the RIGHT New
+          addSlide(getCategoryBackground(category), pairOfNews);
+          // If is the RIGHT new I delete the pair of news and I
+          // initialize it again.
+          pairOfNews = [];
+        }
+        return '';
+      });
       return '';
     });
 
@@ -69,4 +73,54 @@ export const Downloader = () => {
       <ListItemText primary={'Descargar'} />
     </ListItem>
   );
+};
+
+const getCategoryCover = (category: CategoriesTypes) => {
+  const { ppt } = config;
+
+  switch (category) {
+    case CategoriesTypes.ECONOMIA:
+      return ppt.urls.portada_economia;
+    case CategoriesTypes.POLITICA:
+      return ppt.urls.portada_politica;
+    case CategoriesTypes.INTERNACIONALES:
+      return ppt.urls.portada_internacionales;
+    case CategoriesTypes.CORONAVIRUS:
+      return ppt.urls.portada_coronavirus;
+    case CategoriesTypes.JUSTICIA:
+      return ppt.urls.portada_justicia;
+    case CategoriesTypes.SEGURIDAD:
+      return ppt.urls.portada_seguridad;
+    case CategoriesTypes.ACTUALIDAD:
+      return ppt.urls.portada_actualidad;
+    case CategoriesTypes.OPINION:
+      return ppt.urls.portada_opinion;
+    default:
+      return '';
+  }
+};
+
+const getCategoryBackground = (category: CategoriesTypes) => {
+  const { ppt } = config;
+
+  switch (category) {
+    case CategoriesTypes.ECONOMIA:
+      return ppt.urls.economia_contenido;
+    case CategoriesTypes.POLITICA:
+      return ppt.urls.politica_contenido;
+    case CategoriesTypes.INTERNACIONALES:
+      return ppt.urls.internacionales_contenido;
+    case CategoriesTypes.CORONAVIRUS:
+      return ppt.urls.contenido_coronavirus;
+    case CategoriesTypes.JUSTICIA:
+      return ppt.urls.contenido_justicia;
+    case CategoriesTypes.SEGURIDAD:
+      return ppt.urls.seguridad_contenido;
+    case CategoriesTypes.ACTUALIDAD:
+      return ppt.urls.actualidad_contenido;
+    case CategoriesTypes.OPINION:
+      return ppt.urls.contenido_opinion;
+    default:
+      return '';
+  }
 };
