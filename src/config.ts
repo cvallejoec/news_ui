@@ -5,6 +5,13 @@ export const config = {
   },
   spiders: {
     el_comercio: 'el_comercio',
+    la_hora: 'la_hora',
+    el_universo: 'el_universo',
+    el_telegrafo_actualidad: 'el_telegrafo_actualidad',
+    el_telegrafo_empresariales: 'el_telegrafo_empresariales',
+    el_telegrafo_justicia: 'el_telegrafo_justicia',
+    el_telegrafo_mundo: 'el_telegrafo_mundo',
+    el_telegrafo_sociedad: 'el_telegrafo_sociedad',
   },
   ppt: {
     fullWidth: 10.0,

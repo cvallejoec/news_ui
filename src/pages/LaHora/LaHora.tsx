@@ -6,9 +6,9 @@ import { TabsC, TabProps } from '../../components/Tabs/Tabs';
 import { Articles } from '../../components/Articles/Articles';
 import { Loading } from '../../components/Loading/Loading';
 
-export const ElUniverso = () => {
+export const LaHora = () => {
   const { spiders } = config;
-  const { data, loading } = useSpider(spiders.el_universo);
+  const { data, loading } = useSpider(spiders.la_hora);
   const categories = getCategories(data);
 
   const tabs: TabProps[] = categories.map((category) => {

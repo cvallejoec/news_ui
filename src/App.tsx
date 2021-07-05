@@ -7,8 +7,9 @@ import { config } from './config';
 import { useSidebar } from './hooks/useSidebar';
 import { Sidebar } from './components/Sidebar/Sidebar';
 import { ElComercio } from './pages/ElComercio/ElComercio';
-import { ElTelegrafo } from './pages/ElTelegrafo/ElTelegrafo';
+import { LaHora } from './pages/LaHora/LaHora';
 import { ElUniverso } from './pages/ElUniverso/ElUniverso';
+import { ElTelegrafo } from './pages/ElTelegrafo/ElTelegrafo';
 
 const drawerWidth = config.styles.drawer.width;
 
@@ -49,8 +50,9 @@ function App() {
         >
           <Route exact path="/" component={ElComercio} />
           <Route exact path="/el-comercio" component={ElComercio} />
-          <Route exact path="/el-telegrafo" component={ElTelegrafo} />
+          <Route exact path="/la-hora" component={LaHora} />
           <Route exact path="/el-universo" component={ElUniverso} />
+          <Route exact path="/el-telegrafo" component={ElTelegrafo} />
         </div>
       </Switch>
     </Router>
