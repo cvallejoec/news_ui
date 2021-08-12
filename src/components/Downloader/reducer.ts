@@ -62,6 +62,7 @@ export type SlideText = {
   bold?: boolean;
   lineSpacing?: number;
   charSpacing?: number;
+  fontFace?: 'Arial' | 'Helvetica' | 'Calibri';
 };
 
 export type SlideTexts = SlideText[];
@@ -141,8 +142,15 @@ export const usePpt = () => {
       slideTexts.map((slideText) => {
         const { x, y } = slideText.position;
         const { w, h } = slideText.size;
-        const { fontSize, color, align, bold, lineSpacing, charSpacing } =
-          slideText;
+        const {
+          fontSize,
+          color,
+          align,
+          bold,
+          lineSpacing,
+          charSpacing,
+          fontFace,
+        } = slideText;
         return slide.addText(slideText.text, {
           x,
           y,
@@ -154,6 +162,7 @@ export const usePpt = () => {
           bold,
           lineSpacing,
           charSpacing,
+          fontFace,
         });
       });
     }

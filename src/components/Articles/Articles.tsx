@@ -3,8 +3,11 @@ import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 
 import { Article } from './components/Article/Article';
 import { News, New } from '../../types/new.type';
+import { NewsProvider } from '../../types/new.type';
 
 interface ArticleProps {
+  newProvider: NewsProvider;
+  newProviderCategory: string;
   news: News;
 }
 
@@ -29,7 +32,7 @@ const useStyles = makeStyles((theme: Theme) =>
 export const Articles: FC<ArticleProps> = (props) => {
   const classes = useStyles();
   const [expanded, setExpanded] = useState<string | false>(false);
-  const { news } = props;
+  const { news, newProvider, newProviderCategory } = props;
 
   const handleChange =
     (panel: string) => (event: React.ChangeEvent<{}>, isExpanded: boolean) => {
@@ -41,6 +44,8 @@ export const Articles: FC<ArticleProps> = (props) => {
       {news.map(({ title, url, body, time, category }: New, index) => (
         <Article
           key={url}
+          newProvider={newProvider}
+          newProviderCategory={newProviderCategory}
           index={index + 1}
           title={title}
           url={url}

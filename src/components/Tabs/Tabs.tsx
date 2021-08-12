@@ -1,4 +1,4 @@
-import React, { ReactElement, FC } from 'react';
+import React, { ReactElement, FC, useState } from 'react';
 import SwipeableViews from 'react-swipeable-views';
 import { makeStyles, Theme, useTheme } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -6,6 +6,10 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
+
+import { NewsProvider } from '../../types/new.type';
+import { TabTitle } from './components/TabTitle';
+import { useSelectedNews } from '../../hooks/useSelectedNews';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -20,6 +24,7 @@ export type TabProps = {
 };
 
 export interface TabsProps {
+  newProvider: NewsProvider;
   tabs: TabProps[];
 }
 
@@ -65,10 +70,11 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-export const TabsC: FC<TabsProps> = ({ tabs }) => {
+export const TabsC: FC<TabsProps> = ({ newProvider, tabs }) => {
   const classes = useStyles();
   const theme = useTheme();
-  const [value, setValue] = React.useState(0);
+  const [value, setValue] = useState(0);
+  const { getSelectedNewsNumber } = useSelectedNews();
 
   const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
     setValue(newValue);
@@ -93,7 +99,15 @@ export const TabsC: FC<TabsProps> = ({ tabs }) => {
             centered
           >
             {tabs.map((tab, index) => (
-              <Tab label={tab.label} {...a11yProps(index)} />
+              <Tab
+                label={
+                  <TabTitle
+                    title={tab.label}
+                    quantity={getSelectedNewsNumber(newProvider, tab.label)}
+                  />
+                }
+                {...a11yProps(index)}
+              />
             ))}
           </Tabs>
         </AppBar>

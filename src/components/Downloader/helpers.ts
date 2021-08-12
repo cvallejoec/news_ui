@@ -7,11 +7,11 @@ export const getCover = () => {
   const monthAndDate: SlideText = {
     text: `${getCurrentMonth()} ${new Date().getDate()}`,
     position: {
-      x: 3.38,
+      x: 2.75,
       y: 3.07,
     },
     size: {
-      w: 1.275,
+      w: 1.89,
       h: 0.397,
     },
     fontSize: 18,
@@ -48,11 +48,12 @@ export const getNewOfTheDay = (selectedNews: SelectedNewsType) => {
       w: 8.74,
       h: 1.16,
     },
-    fontSize: 20,
+    fontSize: 16,
     color: '#0692f0',
     align: TEXT_HALIGN.right,
     bold: true,
     charSpacing: 0,
+    fontFace: 'Helvetica',
   };
 
   const body: SlideText = {
@@ -65,25 +66,26 @@ export const getNewOfTheDay = (selectedNews: SelectedNewsType) => {
       w: 5.35,
       h: 2.51,
     },
-    fontSize: 7,
+    fontSize: 8,
     color: '#000000',
     align: TEXT_HALIGN.justify,
     lineSpacing: 0,
     charSpacing: 0,
+    fontFace: 'Helvetica',
   };
 
   const url: SlideText = {
     text: `${newOfTheDay.url}`,
     position: {
-      x: 4.17,
-      y: 4.8,
+      x: 4.09,
+      y: 4.64,
     },
     size: {
-      w: 7.15,
-      h: 0.18,
+      w: 5.35,
+      h: 0.47,
     },
-    fontSize: 7,
-    color: '#5c5c5c',
+    fontSize: 8,
+    color: '#3771C7',
     align: TEXT_HALIGN.left,
   };
 
@@ -141,15 +143,15 @@ export const drawCategorizedNew = (categorizedNew: New, index: number) => {
   const url: SlideText = {
     text: `${categorizedNew.url}`,
     position: {
-      x: (index + 1) % 2 === 1 ? 0.62 : 5.39,
+      x: (index + 1) % 2 === 1 ? 0.55 : 5.27,
       y: 4.8,
     },
     size: {
-      w: 3.22,
-      h: 0.18,
+      w: 3.46,
+      h: 0.31,
     },
-    fontSize: 7,
-    color: '#5c5c5c',
+    fontSize: 8,
+    color: '#3771C7',
     align: TEXT_HALIGN.left,
   };
 
@@ -159,8 +161,9 @@ export const drawCategorizedNew = (categorizedNew: New, index: number) => {
 const parseParagraphs = (body: string[]) => {
   let completeParagraph = '';
   body.map((p) => {
-    if (completeParagraph.length > 1600) return '';
+    if (completeParagraph.length > 1500) return '';
     return (completeParagraph = completeParagraph + p + '\n\n');
   });
-  return completeParagraph;
+  // Delete the last blank spaces on the end
+  return completeParagraph.slice(0, -2);
 };

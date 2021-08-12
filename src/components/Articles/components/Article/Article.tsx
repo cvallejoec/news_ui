@@ -8,7 +8,11 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import OpenInNewIcon from '@material-ui/icons/OpenInNew';
 
 import { useSelectedNews } from '../../../../hooks/useSelectedNews';
-import { categories, CategoriesTypes } from '../../../../types/new.type';
+import {
+  categories,
+  CategoriesTypes,
+  NewsProvider,
+} from '../../../../types/new.type';
 import { ActionType } from '../../../../common/NewsProvider';
 import { Button } from '../../../Button/Button';
 import { CheckboxC } from '../../../Checkbox/Checkbox';
@@ -16,6 +20,8 @@ import { ComboBox } from '../../../Autocomplete/Autocomplete';
 import { CopyToClipboardC } from '../../../CopyToClipboard/CopyToClipboard';
 
 interface ArticleProps {
+  newProvider: NewsProvider;
+  newProviderCategory: string;
   index: number;
   title: string;
   url: string;
@@ -66,6 +72,8 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 export const Article: FC<ArticleProps> = ({
+  newProvider,
+  newProviderCategory,
   index,
   title,
   url,
@@ -97,6 +105,8 @@ export const Article: FC<ArticleProps> = ({
     if (value !== null) {
       dispatch({
         type: ActionType.addCategorizedNew,
+        newProvider,
+        newProviderCategory,
         category: value,
         article: {
           body: paragraphs,

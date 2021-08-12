@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { config } from '../../config';
+import { NewsProvider } from '../../types/new.type';
 import { useSpider, getCategories } from '../../hooks/useSpider';
 import { TabsC, TabProps } from '../../components/Tabs/Tabs';
 import { Articles } from '../../components/Articles/Articles';
@@ -19,6 +20,8 @@ export const ElUniverso = () => {
           {data.length > 0 && (
             <Articles
               news={data.filter((item) => item.category === category)}
+              newProvider={NewsProvider.EL_UNIVERSO}
+              newProviderCategory={category}
             />
           )}
         </>
@@ -26,5 +29,9 @@ export const ElUniverso = () => {
     };
   });
 
-  return loading ? <Loading /> : <TabsC tabs={tabs} />;
+  return loading ? (
+    <Loading />
+  ) : (
+    <TabsC tabs={tabs} newProvider={NewsProvider.EL_UNIVERSO} />
+  );
 };

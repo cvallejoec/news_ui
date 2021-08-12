@@ -31,6 +31,15 @@ export const categories = [
 ];
 
 export type CategorizedNew = {
+  newProvider: NewsProvider;
+  newProviderCategory: string;
   category: CategoriesTypes;
   article: New;
 };
+
+export enum NewsProvider {
+  EL_COMERCIO = 'El Comercio',
+  LA_HORA = 'La Hora',
+  EL_UNIVERSO = 'El Universo',
+  EL_TELEGRAFO = 'El Telégrafo',
+}

@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { config } from '../../config';
+import { NewsProvider } from '../../types/new.type';
 import { useSpider, getCategories } from '../../hooks/useSpider';
 import { TabsC, TabProps } from '../../components/Tabs/Tabs';
 import { Articles } from '../../components/Articles/Articles';
@@ -19,6 +20,8 @@ export const LaHora = () => {
           {data.length > 0 && (
             <Articles
               news={data.filter((item) => item.category === category)}
+              newProvider={NewsProvider.LA_HORA}
+              newProviderCategory={category}
             />
           )}
         </>
@@ -26,5 +29,9 @@ export const LaHora = () => {
     };
   });
 
-  return loading ? <Loading /> : <TabsC tabs={tabs} />;
+  return loading ? (
+    <Loading />
+  ) : (
+    <TabsC tabs={tabs} newProvider={NewsProvider.LA_HORA} />
+  );
 };

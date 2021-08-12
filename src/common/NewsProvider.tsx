@@ -1,6 +1,11 @@
 import { createContext, useReducer, FC } from 'react';
 
-import { New, CategorizedNew, CategoriesTypes } from '../types/new.type';
+import {
+  New,
+  CategorizedNew,
+  CategoriesTypes,
+  NewsProvider as NewsProviderType,
+} from '../types/new.type';
 
 export enum ActionType {
   selectNewOfTheDay = 'SELECT-NEW-OF-THE-DAY',
@@ -19,6 +24,8 @@ export type ActionTypes =
     }
   | {
       type: ActionType.addCategorizedNew;
+      newProvider: NewsProviderType;
+      newProviderCategory: string;
       category: CategoriesTypes;
       article: New;
     }
@@ -35,25 +42,34 @@ export type SelectedNewsType = {
 export type DispatchNew = (action: ActionTypes) => void;
 
 const defaultState: SelectedNewsType = {
-  newOfTheDay: {
-    title: '',
-    url: '',
-    time: '',
-    category: '',
-    body: [],
-  },
+  // newOfTheDay: {
+  //   title: '',
+  //   url: '',
+  //   time: '',
+  //   category: '',
+  //   body: [],
+  // },
+  newOfTheDay: {} as New,
   categorizedNews: [],
 };
 
 export const NewsContext = createContext<{
   selectedNews: SelectedNewsType;
   dispatch: DispatchNew;
+  getSelectedNewsNumber: (
+    newProvider: NewsProviderType,
+    newProviderCategory: string
+  ) => number;
 }>({
   selectedNews: defaultState,
   dispatch: () => null,
+  getSelectedNewsNumber: () => 0,
 });
 
-const newsReducer = (state: SelectedNewsType, action: ActionTypes) => {
+const newsReducer = (
+  state: SelectedNewsType,
+  action: ActionTypes
+): SelectedNewsType => {
   switch (action.type) {
     case ActionType.selectNewOfTheDay:
       return { ...state, newOfTheDay: action.payload };
@@ -65,6 +81,8 @@ const newsReducer = (state: SelectedNewsType, action: ActionTypes) => {
         categorizedNews: [
           ...state.categorizedNews,
           {
+            newProvider: action.newProvider,
+            newProviderCategory: action.newProviderCategory,
             category: action.category,
             article: action.article,
           },
@@ -84,8 +102,23 @@ const newsReducer = (state: SelectedNewsType, action: ActionTypes) => {
 
 export const NewsProvider: FC = ({ children }) => {
   const [selectedNews, dispatch] = useReducer(newsReducer, defaultState);
+
+  const getSelectedNewsNumber = (
+    newProvider: NewsProviderType,
+    newProviderCategory: string
+  ): number => {
+    const { categorizedNews } = selectedNews;
+    return categorizedNews.filter(
+      (categorizedNew) =>
+        categorizedNew.newProvider === newProvider &&
+        categorizedNew.newProviderCategory === newProviderCategory
+    ).length;
+  };
+
   return (
-    <NewsContext.Provider value={{ selectedNews, dispatch }}>
+    <NewsContext.Provider
+      value={{ selectedNews, dispatch, getSelectedNewsNumber }}
+    >
       {children}
     </NewsContext.Provider>
   );
