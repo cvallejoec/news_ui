@@ -1,11 +1,13 @@
 import React, { FC } from 'react';
 
+import { Notification } from './Notification';
+
 interface TabTitleProps {
   title: string;
   quantity?: number;
 }
 
-export const TabTitle: FC<TabTitleProps> = ({ title, quantity = 0 }) => {
+export const TabTitle: FC<TabTitleProps> = ({ title, quantity }) => {
   return (
     <div
       style={{
@@ -15,21 +17,7 @@ export const TabTitle: FC<TabTitleProps> = ({ title, quantity = 0 }) => {
       }}
     >
       <span>{title}</span>
-      {quantity > 0 && (
-        <div
-          style={{
-            background: 'var(--accent)',
-            color: 'white',
-            borderRadius: '50%',
-            fontSize: '0.75rem',
-            width: '20px',
-            height: '20px',
-            marginLeft: '10px',
-          }}
-        >
-          {quantity}
-        </div>
-      )}
+      <Notification quantity={quantity} />
     </div>
   );
 };

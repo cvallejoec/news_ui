@@ -84,7 +84,7 @@ export const Article: FC<ArticleProps> = ({
   handleChange,
 }: ArticleProps) => {
   const classes = useStyles();
-  const { selectedNews, dispatch } = useSelectedNews();
+  const { selectedNews, dispatch, isItACategorizedNew } = useSelectedNews();
 
   const handleNewOfTheDay = () => {
     // If the selected NewOfTheDay is the same clicked, then I remove it
@@ -124,6 +124,11 @@ export const Article: FC<ArticleProps> = ({
       expanded={expanded === url}
       onChange={handleChange(url)}
       className={classes.accordion}
+      style={{
+        borderLeft: isItACategorizedNew(url)
+          ? '5px solid var(--accent)'
+          : 'none',
+      }}
     >
       <AccordionSummary
         expandIcon={<ExpandMoreIcon />}

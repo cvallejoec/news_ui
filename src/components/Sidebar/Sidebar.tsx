@@ -25,11 +25,15 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import FindInPageIcon from '@material-ui/icons/FindInPage';
+import ListIcon from '@material-ui/icons/List';
 
+import { NewsProvider } from '../../types/new.type';
 import { ActionType } from '../../common/SidebarProvider';
 import { config } from '../../config';
 import { useSidebar } from '../../hooks/useSidebar';
 import { Downloader } from '../Downloader/Downloader';
+import { Notification } from '../Tabs/components/Notification';
+import { useSelectedNews } from '../../hooks/useSelectedNews';
 
 const drawerWidth = config.styles.drawer.width;
 
@@ -100,8 +104,9 @@ export const Sidebar = () => {
   const location = useLocation();
   const classes = useStyles();
   const theme = useTheme();
-  const [openCollapse, setOpenCollapse] = useState(false);
+  const [openCollapse, setOpenCollapse] = useState(true);
   const { sidebar, dispatch } = useSidebar();
+  const { getSelectedNewsNumberByNewsProvider } = useSelectedNews();
 
   const handleDrawerOpen = () => {
     dispatch({ type: ActionType.open });
@@ -181,6 +186,11 @@ export const Sidebar = () => {
                 to="/el-comercio"
               >
                 <ListItemText primary="El Comercio" />
+                <Notification
+                  quantity={getSelectedNewsNumberByNewsProvider(
+                    NewsProvider.EL_COMERCIO
+                  )}
+                />
               </ListItem>
               <ListItem
                 className={classes.nested}
@@ -188,6 +198,11 @@ export const Sidebar = () => {
                 to="/la-hora"
               >
                 <ListItemText primary="La Hora" />
+                <Notification
+                  quantity={getSelectedNewsNumberByNewsProvider(
+                    NewsProvider.LA_HORA
+                  )}
+                />
               </ListItem>
               <ListItem
                 className={classes.nested}
@@ -195,6 +210,11 @@ export const Sidebar = () => {
                 to="/el-universo"
               >
                 <ListItemText primary="El Universo" />
+                <Notification
+                  quantity={getSelectedNewsNumberByNewsProvider(
+                    NewsProvider.EL_UNIVERSO
+                  )}
+                />
               </ListItem>
               <ListItem
                 className={classes.nested}
@@ -202,9 +222,20 @@ export const Sidebar = () => {
                 to="/el-telegrafo"
               >
                 <ListItemText primary="El Telégrafo" />
+                <Notification
+                  quantity={getSelectedNewsNumberByNewsProvider(
+                    NewsProvider.EL_TELEGRAFO
+                  )}
+                />
               </ListItem>
             </List>
           </Collapse>
+          <ListItem component={Link} to="/resumen">
+            <ListItemIcon>
+              <ListIcon />
+            </ListItemIcon>
+            <ListItemText primary="Resumen" />
+          </ListItem>
         </List>
       </Drawer>
     </div>
@@ -223,6 +254,8 @@ const getPageTitle = (path: string) => {
       return 'El Universo';
     case '/el-telegrafo':
       return 'El Telegrafo';
+    case '/resumen':
+      return 'Resumen';
     default:
       return '';
   }

@@ -66,7 +66,7 @@ export const getNewOfTheDay = (selectedNews: SelectedNewsType) => {
       w: 5.35,
       h: 2.51,
     },
-    fontSize: 8,
+    fontSize: 7,
     color: '#000000',
     align: TEXT_HALIGN.justify,
     lineSpacing: 0,
@@ -127,24 +127,25 @@ export const drawCategorizedNew = (categorizedNew: New, index: number) => {
     text: parseParagraphs(categorizedNew.body),
     position: {
       x: (index + 1) % 2 === 1 ? 0.47 : 5.2,
-      y: 1.65,
+      y: 1.6,
     },
     size: {
       w: 3.54,
       h: 2.82,
     },
-    fontSize: 6,
+    fontSize: 7,
     color: '#000000',
     align: TEXT_HALIGN.justify,
     lineSpacing: 0,
     charSpacing: 0,
+    fontFace: 'Helvetica',
   };
 
   const url: SlideText = {
     text: `${categorizedNew.url}`,
     position: {
       x: (index + 1) % 2 === 1 ? 0.55 : 5.27,
-      y: 4.8,
+      y: 4.7,
     },
     size: {
       w: 3.46,
@@ -158,10 +159,10 @@ export const drawCategorizedNew = (categorizedNew: New, index: number) => {
   return [title, body, url];
 };
 
-const parseParagraphs = (body: string[]) => {
+const parseParagraphs = (body: string[] = ['']) => {
   let completeParagraph = '';
   body.map((p) => {
-    if (completeParagraph.length > 1500) return '';
+    if (completeParagraph.length > 1300) return '';
     return (completeParagraph = completeParagraph + p + '\n\n');
   });
   // Delete the last blank spaces on the end

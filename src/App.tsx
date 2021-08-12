@@ -10,6 +10,7 @@ import { ElComercio } from './pages/ElComercio/ElComercio';
 import { LaHora } from './pages/LaHora/LaHora';
 import { ElUniverso } from './pages/ElUniverso/ElUniverso';
 import { ElTelegrafo } from './pages/ElTelegrafo/ElTelegrafo';
+import { Summary } from './pages/Summary/Summary';
 
 const drawerWidth = config.styles.drawer.width;
 
@@ -53,6 +54,7 @@ function App() {
           <Route exact path="/la-hora" component={LaHora} />
           <Route exact path="/el-universo" component={ElUniverso} />
           <Route exact path="/el-telegrafo" component={ElTelegrafo} />
+          <Route exact path="/resumen" component={Summary} />
         </div>
       </Switch>
     </Router>

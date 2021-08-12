@@ -60,10 +60,18 @@ export const NewsContext = createContext<{
     newProvider: NewsProviderType,
     newProviderCategory: string
   ) => number;
+  isTheSelectedNewOfTheDay: (url: string) => boolean;
+  getSelectedNewsNumberByNewsProvider: (
+    newProvider: NewsProviderType
+  ) => number;
+  isItACategorizedNew: (url: string) => boolean;
 }>({
   selectedNews: defaultState,
   dispatch: () => null,
   getSelectedNewsNumber: () => 0,
+  isTheSelectedNewOfTheDay: () => false,
+  getSelectedNewsNumberByNewsProvider: () => 0,
+  isItACategorizedNew: () => false,
 });
 
 const newsReducer = (
@@ -115,9 +123,41 @@ export const NewsProvider: FC = ({ children }) => {
     ).length;
   };
 
+  const getSelectedNewsNumberByNewsProvider = (
+    newProvider: NewsProviderType
+  ): number => {
+    console.log('Está entrado');
+    const { categorizedNews } = selectedNews;
+    return categorizedNews.filter(
+      (categorizedNew) => categorizedNew.newProvider === newProvider
+    ).length;
+  };
+
+  const isTheSelectedNewOfTheDay = (url: string): boolean => {
+    const { newOfTheDay } = selectedNews;
+    if (newOfTheDay.url === url) return true;
+    return false;
+  };
+
+  const isItACategorizedNew = (url: string): boolean => {
+    const { categorizedNews } = selectedNews;
+    const filteredNews = categorizedNews.filter(
+      (categorizedNew) => categorizedNew.article.url === url
+    );
+    if (filteredNews.length > 0) return true;
+    return false;
+  };
+
   return (
     <NewsContext.Provider
-      value={{ selectedNews, dispatch, getSelectedNewsNumber }}
+      value={{
+        selectedNews,
+        dispatch,
+        getSelectedNewsNumber,
+        isTheSelectedNewOfTheDay,
+        getSelectedNewsNumberByNewsProvider,
+        isItACategorizedNew,
+      }}
     >
       {children}
     </NewsContext.Provider>
